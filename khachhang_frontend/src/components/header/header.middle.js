@@ -69,7 +69,7 @@ class HeaderMiddle extends Component {
                 <Link to={"/"}  >Hồ Sơ </Link>
               </li>
 
-              <li><Link to='/purchase_history' >Đơn Hàng </Link></li>
+              <li><Link to='/purchase_history/null' >Đơn Hàng </Link></li>
           
           </ul>
       );

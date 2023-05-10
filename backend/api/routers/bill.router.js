@@ -28,4 +28,7 @@ module.exports = (app) => {
         
     app.route('/bill/updateissend')
         .post(bill_controller.updateIssend);
+    app.route('/bill/change-payment-status/:billId')
+        .get(bill_controller.updateIsPayment);
+        
 }

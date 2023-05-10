@@ -4,6 +4,7 @@ import FooterMiddle from "../footer/footer.middle";
 import FooterTop from "../footer/footer.top";
 import HeaderMiddle from "../header/header.middle";
 import storeConfig from "../../config/storage.config";
+import axios from 'axios'
 class HistoryPurchase extends Component {
   constructor(props) {
     super(props);
@@ -14,10 +15,26 @@ class HistoryPurchase extends Component {
       name: "",
       email: "",
       comment: "",
+      paymentUrl:"",
+      billId:""
     }
 
   }
-  componentWillMount() {
+  componentWillMount = async () => {
+    function getNullValue(str) {
+      const arr = str.split('/');
+      return arr.pop();
+    }
+    
+    const str = this.props.history.location.pathname;
+    const billId = getNullValue(str);
+    console.log(billId); // "null"
+
+    if(billId != "null"){
+      console.log(`${'http://localhost:8080/change-payment-status/'+ billId}`)
+      await axios.get(`${'http://localhost:8080/bill/change-payment-status/'+ billId}`);
+    }
+    this.setState({billId:billId});
     let tmp = [];
     for (let i = 1; i <= this.props.totalpage; i++) {
       tmp.push(i);
@@ -76,7 +93,7 @@ class HistoryPurchase extends Component {
                     <td className="cart_description">
                       <h4>
                         <a>{item.name} </a>
-                        <p>Màu: {item.size}</p>
+                        <p>Trạng thái thanh toán: {element.isPayment == false ? "Chưa thanh toán" : "Đã thanh toán"}</p>
                       </h4>
               
                     </td>
@@ -105,10 +122,12 @@ class HistoryPurchase extends Component {
               </table>
               <div className='login-form'>
                 <div className='delete-cart'>
-                <button onClick={() => this.props.deleteBill(element._id)} className="destroy btn btn-default">Hủy Đơn Hàng</button>
+                  {element.isPayment == false ? <button onClick={() => this.props.deleteBill(element._id)} className="destroy btn btn-default">Hủy Đơn Hàng</button>:null}
+               
                 </div>
                 <div className='delete-cart'>
-                <button onClick={()=>this.handleClickCard(element._id)} className="destroy btn btn-default">Thanh toán Card</button>
+                {element.isPayment == false ? <button onClick={(e)=>this.handleSubmitPayment(element.total,element._id,e)} className="destroy btn btn-default">Thanh toán Momo</button>:null}
+                
                 </div>
               </div>
               <hr/>
@@ -431,34 +450,31 @@ class HistoryPurchase extends Component {
     );
     
   }
-  
-  handleClickCard = (_id) =>{
-   
-    this.setState({
-      isComment:true,
-      id_product: _id,
-    })
+
+  handleSubmitPayment = async (amount,billId,e) =>{
+    e.preventDefault();
+    let data = await axios.post('http://localhost:8080/payment-online', {
+                amount: amount,
+                returnUrl: `${"http://localhost:3000/purchase_history/"+billId}` 
+    });
+    if(data.data.data != null){
+     
+      window.location.href = data.data.data
+    }
   }
   render() {
     let xhtml='';
   
     if(this.state.isComment){
-      xhtml = <div className='aler-box'>
+      xhtml = <div className='aler-box1'>
         <div className='btn-close ' onClick={() => this.setState({ isComment: false })}>
           X
         </div>
       <div className='aler-title'>
-        <h3 className='title'>Thanh toán Card</h3>
+        <h3 className='title'>Thanh toán Momo</h3>
       </div>
       <div className='aler-body'>
-      <form action="#">
-                        
-      <input type="text" placeholder="Name" style={{ width: "300px",height:"40px",marginTop : "20px" }} />
-      <input type="number" placeholder="Card Number" style={{ width: "300px",height:"40px",marginTop : "10px" }} />
-      <input type="text" placeholder="Expiration (mm/yy)" style={{ width: "300px",height:"40px",marginTop : "10px" }} />
-      <input type="number" placeholder="Security Code" style={{ width: "300px",height:"40px",marginTop : "10px" }} />
-      
-                      </form>
+      <iframe style={{width: "100%",height: "700px"}}  src={this.state.paymentUrl} title="Momo payment" />
       </div>
       <div className='alert-footer'>
         <button className="roduct-variation" onClick={() => this.setState({ isComment: false })}>

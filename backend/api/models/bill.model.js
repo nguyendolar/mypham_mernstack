@@ -31,6 +31,10 @@ const bill = new Schema({
     required: true,
     minlength: 1
   },
+  isPayment:{
+    type:Boolean,
+    default:false
+  },
   total: Number,
   address: String,
   phone: String,

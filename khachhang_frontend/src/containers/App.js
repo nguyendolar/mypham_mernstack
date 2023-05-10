@@ -21,12 +21,11 @@ const App = () => (
       <Route exact path='/forgotpass/' component={ForgotPasswordContainer} />
       <Route exact path='/product/:id' component={ProductDetailContainer} />
       <Route exact path='/post/:id' component={PostDetailContainer} />
-       <Route exact path='/payment' component={Payment} />
 
       <Route exact path='/profile/:email' component={ProfileContainer} />
       <Route exact path='/cart' component={CartContainer} />
       <Route exact path='/payment/:token' component={VerifyPaymentContainer} />
-      <Route exact path='/purchase_history' component={HistoryPurchase} />
+      <Route exact path='/purchase_history/:billId' component={HistoryPurchase} />
       <Route exact path='/post' component={PostContainer} />
 
     </Switch>

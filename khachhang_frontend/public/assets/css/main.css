@@ -267,6 +267,21 @@
         background-color: #fefefe;
       
       }
+      .aler-box1{
+        padding: 1rem 3rem;
+        border: 1px solid violet;
+        box-shadow: 0 0 20px rgb(249 168 168 / 84%), 0 0 20px rgb(242 146 246 / 45%), 0 0 30px rgb(151 144 250 / 25%), 0 0 30px rgb(247 219 219 / 10%);
+        z-index: 99;
+        position: fixed;
+        top: 90%;
+        left: 50%;
+        width: 100%;
+        transform: translate(-50%,-100%);
+        max-width: 1200px;
+        max-height: 1200px;
+        background-color: #fefefe;
+      
+      }
       .btn-close {
         position: absolute;
         top: 0px;

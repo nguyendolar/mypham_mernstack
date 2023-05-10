@@ -15,14 +15,12 @@ exports.momoPayment = async (req, res) => {
   });
   let orderId = uuid.v4();
   let orderInfo = 'Payment by MOMO';
-    console.log("accessKey",momoPaymentA.accessKey)
-    console.log("secretKey",momoPaymentA.secretKey)
   try {
 
     const result = await momoPaymentA.createPayment({
         requestId: `ID-${orderId}`,
         orderId,
-        amount: "10000",
+        amount: req.body.amount.toString(),
         orderInfo,
         returnUrl:req.body.returnUrl,
         notifyUrl: req.body.returnUrl,
