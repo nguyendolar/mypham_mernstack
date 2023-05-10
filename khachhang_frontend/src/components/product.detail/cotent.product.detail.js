@@ -115,7 +115,7 @@ class ContentProductDetail extends Component {
     let product = {...this.props.mproductDetail};
     product.count = this.state.quantity;
     product.size = this.state.size;
-    if(product.size==='' || product.count < 1){
+    if(product.count < 1){
      
       this.setState({
         noti: true,

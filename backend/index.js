@@ -12,6 +12,7 @@ const productRouter = require('./api/routers/product.router');
 const authorRouter = require('./api/routers/author.router');
 const commentRouter = require('./api/routers/comment.router');
 const billRouter = require('./api/routers/bill.router');
+const paymentOnlnineRouter = require('./api/routers/payment-online.router');
 const cartRouter = require('./api/routers/cart.router');
 const adminRouter = require('./api/routers/admin.router');
 const addressVnRouter = require('./api/routers/addres.vn.router');
@@ -64,6 +65,7 @@ authorRouter(app);
 commentRouter(app)
 billRouter(app);
 cartRouter(app);
+paymentOnlnineRouter(app);
 adminRouter(app);
 addressVnRouter(app);
 articleRouter(app);

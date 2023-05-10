@@ -11,6 +11,7 @@ import VerifyPaymentContainer from './verify.payment.container'
 import HistoryPurchase from './history.purchase.container'
 import PostContainer from './post.container'
 import PostDetailContainer from './post.detail.container'
+import Payment from './payment-online.container'
 const App = () => (
   <Router>
     <Switch>
@@ -20,6 +21,7 @@ const App = () => (
       <Route exact path='/forgotpass/' component={ForgotPasswordContainer} />
       <Route exact path='/product/:id' component={ProductDetailContainer} />
       <Route exact path='/post/:id' component={PostDetailContainer} />
+       <Route exact path='/payment' component={Payment} />
 
       <Route exact path='/profile/:email' component={ProfileContainer} />
       <Route exact path='/cart' component={CartContainer} />
