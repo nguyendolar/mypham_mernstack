@@ -20,7 +20,7 @@ class HistoryPurchase extends Component {
     }
 
   }
-  componentWillMount = async () => {
+  componentDidMount = async () =>{
     function getNullValue(str) {
       const arr = str.split('/');
       return arr.pop();
@@ -33,8 +33,12 @@ class HistoryPurchase extends Component {
     if(billId != "null"){
       console.log(`${'http://localhost:8080/change-payment-status/'+ billId}`)
       await axios.get(`${'http://localhost:8080/bill/change-payment-status/'+ billId}`);
+      window.location.href ="http://localhost:3000/purchase_history/null"
     }
     this.setState({billId:billId});
+  }
+  componentWillMount = async () => {
+   
     let tmp = [];
     for (let i = 1; i <= this.props.totalpage; i++) {
       tmp.push(i);
@@ -460,9 +464,11 @@ class HistoryPurchase extends Component {
                 amount: amount,
                 returnUrl: `${"http://localhost:3000/purchase_history/"+billId}` 
     });
+    console.log("câcc",data)
     if(data.data.data != null){
      
       window.location.href = data.data.data
+
     }
   }
   render() {
