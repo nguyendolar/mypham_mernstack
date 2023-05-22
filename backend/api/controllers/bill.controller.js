@@ -428,6 +428,7 @@ exports.updateIssend = async (req, res) => {
   }
  
   billFind.issend = issend;
+  billFind.isPayment = true;
   try {
       await billFind.save();
   }

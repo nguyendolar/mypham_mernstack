@@ -122,8 +122,8 @@ class HistoryPurchase extends Component {
                 </tbody>
               </table>
               <div className='login-form'>
-                <div className='delete-cart'>
-                  {element.isPayment == false ? <button onClick={() => this.props.deleteBill(element._id)} className="destroy btn btn-default">Hủy Đơn Hàng</button>:null}
+                <div className='delete-cart' style={{marginLeft: "700px"}}>
+                  {element.isPayment == false ? <button  onClick={() => this.props.deleteBill(element._id)} className="destroy btn btn-default">Hủy Đơn Hàng</button>:null}
                
                 </div>
                 <div className='delete-cart'>
@@ -164,6 +164,7 @@ class HistoryPurchase extends Component {
             <div className="table-responsive cart_info" style={{marginBottom: "50px"}}>
               <p className='cart_total_price'>Đang giao hàng</p>
               <span>Date: {new Date(element.date).toDateString("yyyy-MM-dd")}</span>
+              <p style={{marginLeft: "5px"}}>{element.isPayment == false ? "Chưa thanh toán" : "Đã thanh toán"}</p>
               <p className='cart_total_price'>Total: {new Intl.NumberFormat('de-DE', {currency: 'EUR' }).format(this.caculatorTotalBill(element.products))}<sup>đ</sup></p>
               
               <table className="table table-condensed">
@@ -248,6 +249,7 @@ class HistoryPurchase extends Component {
             <div className="table-responsive cart_info" style={{marginBottom: "50px"}}>
               <p className='cart_total_price'>Đã giao hàng</p>
               <span>Date: {new Date(element.date).toDateString("yyyy-MM-dd")}</span>
+              <p style={{marginLeft: "5px"}}>{element.isPayment == false ? "Chưa thanh toán" : "Đã thanh toán"}</p>
               <p className='cart_total_price'>Total: {new Intl.NumberFormat('de-DE', {currency: 'EUR' }).format(this.caculatorTotalBill(element.products))}<sup>đ</sup> </p>
               
               <table className="table table-condensed">
@@ -294,7 +296,7 @@ class HistoryPurchase extends Component {
                     </td>
                     <td className="cart_total">
                       <p className="cart_total_price">{new Intl.NumberFormat('de-DE', {currency: 'EUR' }).format(item.count * item.price)}<sup>đ</sup></p>
-                      <button onClick={()=>this.handleClickComment(item._id)}>Bình Luận</button>
+                      {/* <button onClick={()=>this.handleClickComment(item._id)}>Bình Luận</button> */}
                     </td>
                   </tr>
                   
