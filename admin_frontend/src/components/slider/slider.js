@@ -36,16 +36,10 @@ class Slider extends Component {
         return (
                 <div id="sidebar" className="nav-collapse">
                     <ul className="sidebar-menu">
-                        <li className="active">
-                            <a className="" href="/">
-                                <i className="icon_house_alt"></i>
-                                <span>Dashboard</span>
-                            </a>
-                        </li>
                         <li className="sub-menu">
                             <a href="javascript:" className=""> 
                                 <i className="icon_document_alt"></i>
-                                <span>Quản Lý Product</span>
+                                <span>Quản Lý</span>
                                 <span className="menu-arrow arrow_carrot-right"></span>
                             </a>
                             {navigate}
@@ -60,27 +54,6 @@ class Slider extends Component {
                             <li><a className="" href="/billmanager">Đơn Hàng</a></li>
                             </ul>
                         </li>
-                        <li>
-                            <a className="" href="/statistical">
-                                <i className="icon_genius"></i>
-                                <span>Thống Kê</span>
-                            </a>
-                        </li>
-                       
-
-                        <li className="sub-menu">
-                            <a href="javascript:;" className="">
-                                <i className="icon_table"></i>
-                                <span>Bài Viết</span>
-                                <span className="menu-arrow arrow_carrot-right"></span>
-                            </a>
-                            <ul className="sub">
-                                <li><a className="" href="/post">Bài viết</a></li>
-                            </ul>
-                        </li>
-
-                        
-
                     </ul>
       </div>
         )

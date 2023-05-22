@@ -37,7 +37,7 @@ class Post extends Component {
             <section className=" ">
               <div className="post-item">
                 <div className="post-item-title "><h3 className="item-title">{this.props.mpostDetail.Title}</h3> </div>
-                <div className="post-item-content"><p>{this.props.mpostDetail.Content}</p> </div>
+                <p>{this.props.mpostDetail.Content}</p> 
               </div>
 
             </section>

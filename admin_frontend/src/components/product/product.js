@@ -642,17 +642,6 @@ class Product extends Component {
                     </div>
                     <div className="form-group ">
                       <label for="comment" className="control-label col-lg-2">
-                        Màu :
-                      </label>
-                    <div className="btn-group col-lg-10">
-                      <ul className='ischeck'>
-                        {this.checkboxSize()}
-                      </ul>
-                    </div>
-                    </div>
-                    
-                    <div className="form-group ">
-                      <label for="comment" className="control-label col-lg-2">
                         Image upload{" "}
                       </label>
                       <div className="col-lg-10">

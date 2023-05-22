@@ -90,7 +90,7 @@ class Bill extends Component {
               <header className="panel-heading">
                 Advanced Table
                 <span style={{ marginLeft: "50px", marginRight: "30px" }}>
-                  Select Day
+                  Select 
                 </span>
                 <select onChange={e => this.props.getBill(e.target.value)}>
                   <option
@@ -99,7 +99,7 @@ class Bill extends Component {
                     selected
                     style={{ display: "none" }}
                   >
-                    Status
+                    Tất cả
                   </option>
                   <option value="99">Đang Chờ Xử Lý</option>
                   <option value="0">Đang Giao Hàng</option>
@@ -114,7 +114,10 @@ class Bill extends Component {
                     <th>Address</th>
                     <th>Phone</th>
                     <th>Date</th>
+                    <th>Payment</th>
+                    
                     <th>Products</th>
+                    <th>Update</th>
                   </tr>
                   {this.props.bill.map((element, index) => {
                     return (
@@ -125,6 +128,8 @@ class Bill extends Component {
                         </td>
                         <td>{element.phone}</td>
                         <td>{new Date(element.date).toDateString("yyyy-MM-dd")}</td>
+                        <td>{element.isPayment == false ? "Chưa thanh toán" : "Đã thanh toán"}</td>
+                        
                         <td>
                           
                           <div>
@@ -146,7 +151,7 @@ class Bill extends Component {
                           
                         </td>
                        
-                        <td className='product-price'><p><span>{new Intl.NumberFormat('de-DE', {currency: 'EUR' }).format(element.total)}<sup>đ</sup></span> </p></td>
+                        {/* <td className='product-price'><p><span>{new Intl.NumberFormat('de-DE', {currency: 'EUR' }).format(element.total)}<sup>đ</sup></span> </p></td> */}
                         <td><select onChange={e => this.props.updateIssend(e.target.value,element._id)}>
                                   
                           <option

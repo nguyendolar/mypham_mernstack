@@ -70,6 +70,7 @@ class HistoryPurchase extends Component {
             <div className="table-responsive cart_info" style={{marginBottom: "50px"}}>
               <p className='cart_total_price'>Đang chờ xử lý</p>
               <span>Date: {new Date(element.date).toDateString("yyyy-MM-dd")}</span>
+              <p style={{marginLeft: "5px"}}>{element.isPayment == false ? "Chưa thanh toán" : "Đã thanh toán"}</p>
               <p className='cart_total_price'>Total: {new Intl.NumberFormat('de-DE', {currency: 'EUR' }).format(this.caculatorTotalBill(element.products))}<sup>đ</sup></p>
               
               <table className="table table-condensed">
@@ -93,7 +94,7 @@ class HistoryPurchase extends Component {
                     <td className="cart_description">
                       <h4>
                         <a>{item.name} </a>
-                        <p>Trạng thái thanh toán: {element.isPayment == false ? "Chưa thanh toán" : "Đã thanh toán"}</p>
+                        
                       </h4>
               
                     </td>

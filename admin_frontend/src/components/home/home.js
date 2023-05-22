@@ -17,17 +17,8 @@ class Home extends Component {
             <div className="row">
               <div className="col-lg-12">
                 <h3 className="page-header">
-                  <i className="fa fa-laptop" /> Dashboard
+                  <i className="fa fa-laptop" /> Chào mừng bạn đến trang Quản Trị Hệ thống
                 </h3>
-                <ol className="breadcrumb">
-                  <li>
-                    <i className="fa fa-home" />
-                    <a href="index.html">Home</a>
-                  </li>
-                  <li>
-                    <i className="fa fa-laptop" />Dashboard
-                  </li>
-                </ol>
               </div>
             </div>
 
