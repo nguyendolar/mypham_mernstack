@@ -10,42 +10,49 @@ class Bill extends Component {
   }
   componentWillMount() {
     let tmp = [];
-    for (let i = 1; i <= this.props.totalpage; i++) {
+    for (let i = 1; i <= this.props.totalpage; i++)
+    {
       tmp.push(i);
     }
     this.setState({ pagination: tmp });
   }
   componentWillReceiveProps(nextProps) {
-    if (nextProps.totalpage !== this.props.totalpage) {
+    if (nextProps.totalpage !== this.props.totalpage)
+    {
       let tmp = [];
-      for (let i = 1; i <= nextProps.totalpage; i++) {
+      for (let i = 1; i <= nextProps.totalpage; i++)
+      {
         tmp.push(i);
       }
       this.setState({ pagination: tmp });
     }
   }
   renderPagination() {
-    if (this.state.pagination.length === 0) {
+    if (this.state.pagination.length === 0)
+    {
       return null;
-    } else {
+    } else
+    {
       return (
         <ul className="pagination pagination-custom col-md-6 offset-md-3">
           <li onClick={() => this.props.backPage()}>
             <a>&laquo;</a>
           </li>
           {this.state.pagination.map((element, index) => {
-            if (this.props.page === element) {
+            if (this.props.page === element)
+            {
               return (
                 <li
                   className="active"
-                  onClick={() => this.props.setPage(element)}
+                  onClick={() => { this.props.setPage(element) }}
                 >
                   <a>{element}</a>
                 </li>
               );
-            } else {
+            } else
+            {
               return (
-                <li onClick={() => this.props.setPage(element)}>
+                <li onClick={() => { this.props.setPage(element) }}>
                   <a>{element}</a>
                 </li>
               );
@@ -58,8 +65,8 @@ class Bill extends Component {
       );
     }
   }
-  showdetail(){
-    
+  showdetail() {
+
   }
   render() {
     console.log(this.props.bill);
@@ -90,7 +97,7 @@ class Bill extends Component {
               <header className="panel-heading">
                 Advanced Table
                 <span style={{ marginLeft: "50px", marginRight: "30px" }}>
-                  Select 
+                  Select
                 </span>
                 <select onChange={e => this.props.getBill(e.target.value)}>
                   <option
@@ -115,7 +122,7 @@ class Bill extends Component {
                     <th>Phone</th>
                     <th>Date</th>
                     <th>Payment</th>
-                    
+
                     <th>Products</th>
                     <th>Update</th>
                   </tr>
@@ -129,39 +136,31 @@ class Bill extends Component {
                         <td>{element.phone}</td>
                         <td>{new Date(element.date).toDateString("yyyy-MM-dd")}</td>
                         <td>{element.isPayment == false ? "Chưa thanh toán" : "Đã thanh toán"}</td>
-                        
+
                         <td>
-                          
+
                           <div>
-                            
-                              {element.products.map((item, index) => {
-                                return (
-                                    <div className='product'>
-                                      <div className='img'><img src={item.img}></img> </div>
-                                      <div className='product-content'>
-                                        <div>{item.name }</div>
-                                        <div>{"Số Lượng: " + item.count}</div>
-                                        <div className='product-price'><p>Giá: {new Intl.NumberFormat('de-DE', {currency: 'EUR' }).format(item.price)}<sup>đ</sup> </p> </div>
-                                      </div>
-                                      
-                                    </div>
-                                )
-                              })}
-                            </div>
-                          
+
+                            {element.products.map((item, index) => {
+                              return (
+                                <div className='product'>
+                                  <div className='img'><img src={item.img}></img> </div>
+                                  <div className='product-content'>
+                                    <div>{item.name}</div>
+                                    <div>{"Số Lượng: " + item.count}</div>
+                                    <div className='product-price'><p>Giá: {new Intl.NumberFormat('de-DE', { currency: 'EUR' }).format(item.price)}<sup>đ</sup> </p> </div>
+                                  </div>
+
+                                </div>
+                              )
+                            })}
+                          </div>
+
                         </td>
-                       
+
                         {/* <td className='product-price'><p><span>{new Intl.NumberFormat('de-DE', {currency: 'EUR' }).format(element.total)}<sup>đ</sup></span> </p></td> */}
-                        <td><select onChange={e => this.props.updateIssend(e.target.value,element._id)}>
-                                  
-                          <option
-                            value=""
-                            disabled
-                            selected
-                            style={{ display: "none" }}
-                          >
-                           
-                          </option>
+                        <td><select onChange={e => this.props.updateIssend(e.target.value, element._id)}>
+                          {element.issend == "99" ? <option value='99' >Đang Chờ Xử Lý</option> : element.issend == "0" ? <option value='0' >Đang Giao Hàng</option> : <option value='1'>Đã Giao Hàng</option>}
                           <option value='99' >Đang Chờ Xử Lý</option>
                           <option value='0'>Đang Giao Hàng</option>
                           <option value='1'>Đã Giao Hàng</option>

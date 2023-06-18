@@ -12,29 +12,37 @@ import Modal from "react-modal";
 class BillContainer extends Component {
   constructor() {
     super();
-    this.state={
-      isOpen:false,
+    this.state = {
+      isOpen: false,
     }
   }
   async componentWillMount() {
-    this.props.productActions.getBill("true");
+    this.props.productActions.getBill("99");
     let res = await this.props.userActions.auth();
     if (res === false) this.props.history.push("/login");
   }
   componentWillReceiveProps(nextProps) {
+    console.log("nha", nextProps)
     if (
       nextProps.islogin !== this.props.islogin &&
       nextProps.islogin === false
-    ) {
+    )
+    {
       this.props.history.push("/login");
     }
+    if (nextProps.page !== this.props.page)
+    {
+      this.props.productActions.getBill("99", nextProps.page);
+    }
   }
-  handleClickUser = () =>{
-    if(storeConfig.getUser().is_admin) {
+  handleClickUser = () => {
+    if (storeConfig.getUser().is_admin)
+    {
       this.props.history.push('/usermanager')
-    }else{
+    } else
+    {
       this.setState({
-        isOpen:true,
+        isOpen: true,
       })
     }
   }
@@ -42,11 +50,11 @@ class BillContainer extends Component {
     return (
       <section id="container" className="">
         <NavbarContainer />
-        <Slider  handleClickUser = {()=>this.handleClickUser()}/>
+        <Slider handleClickUser={() => this.handleClickUser()} />
         <Bill
-         updateIssend={(name,id) =>
-          this.props.productActions.updateIssend(name,id)
-         }
+          updateIssend={(name, id) =>
+            this.props.productActions.updateIssend(name, id)
+          }
           isupdate={this.props.isupdate}
           page={this.props.page}
           totalpage={this.props.totalpage}
@@ -57,36 +65,36 @@ class BillContainer extends Component {
           getBill={(status => this.props.productActions.getBill(status))}
         />
         <Modal
-            isOpen={this.state.isOpen}
-            contentLabel="Example Modal"
-            className="modal-cart"
-          >
-            <div>
-              <div className="modal-title">
+          isOpen={this.state.isOpen}
+          contentLabel="Example Modal"
+          className="modal-cart"
+        >
+          <div>
+            <div className="modal-title">
               <i class="fas fa-exclamation-circle"></i>
-                <h2>Thông báo</h2>
+              <h2>Thông báo</h2>
+            </div>
+            <div className="modal-content-cart">
+              <div className="modal-content-title">
+                Bạn cần phải là Admin mới có thể truy cập
               </div>
-              <div className="modal-content-cart">
-                <div className="modal-content-title">
-                  Bạn cần phải là Admin mới có thể truy cập
-                </div>
-                <div className="btn-close-modal">
-                  <button
-                    className="btn btn-modal-cart"
-                    onClick={() => {
-                      this.setState({
-                        isOpen:false
-                      });
-                    }}
-                  >
-                    close
-                  </button>
-                </div>
+              <div className="btn-close-modal">
+                <button
+                  className="btn btn-modal-cart"
+                  onClick={() => {
+                    this.setState({
+                      isOpen: false
+                    });
+                  }}
+                >
+                  close
+                </button>
               </div>
             </div>
-          </Modal>
+          </div>
+        </Modal>
       </section>
-      
+
     );
   }
 }
