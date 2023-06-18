@@ -3,15 +3,15 @@ const transporter = nodemailer.createTransport(
    {
     service: 'gmail',
     auth: {
-      user: 'kiara96.shippo@gmail.com',
-      pass: 'saleem03081996'
+      user: 'purplerose2305@gmail.com',
+      pass: 'vtsvzroezxsrvvze'
     }
    }
 )
 
 exports.sendEmail = async (email, token) => {
     let mailOptions = {
-        from: '"SHOOPER 👻" <kiara966.shippo@gmail.com>', // sender address
+        from: '"SHOOPER 👻" <purplerose2305@gmail.com>', // sender address
         to: email, // list of receivers
         subject: 'Account Verification Token', // Subject line
         text: 'Hello my friend',
@@ -33,7 +33,7 @@ exports.sendEmail = async (email, token) => {
 
 exports.sendEmailForgotPassword = async (email, token) => {
     let mailOptions = {
-        from: '"SHOOPER 👻" <kiara966.shippo@gmail.com>', // sender address
+        from: '"SHOOPER 👻" <purplerose2305@gmail.com>', // sender address
         to: email, // list of receivers
         subject: 'Forgot password Verification Token', // Subject line
         html: '<b>Forgot password</b>'

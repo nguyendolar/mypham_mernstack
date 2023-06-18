@@ -35,7 +35,9 @@ function ContentLoginRegister({ setEmailogin, setPasswordlogin, setEmail,
                 className="btn btn-default"
                 onClick={() => loginSubmit()}
             >Login</button>
-            
+            <div className='forgotpassword'>
+                <Link to='/forgotpass/' >Quen Mat Khau?</Link>
+            </div>
            
         </div>
         

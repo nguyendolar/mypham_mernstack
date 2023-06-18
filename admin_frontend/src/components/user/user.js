@@ -121,46 +121,6 @@ class User extends Component {
         noti: ""
       });
     }
-    if (password.length < 6) {
-      this.setState({
-        noti: "Password invalid"
-      });
-      return;
-    } else {
-      this.setState({
-        noti: ""
-      });
-    }
-    if (firstName.length < 3) {
-      this.setState({
-        noti: "First name invalid"
-      });
-      return;
-    } else {
-      this.setState({
-        noti: ""
-      });
-    }
-    if (lastName.length < 3) {
-      this.setState({
-        noti: "Last name invalid"
-      });
-      return;
-    } else {
-      this.setState({
-        noti: ""
-      });
-    }
-    if (address.length < 3) {
-      this.setState({
-        noti: "Address invalid"
-      });
-      return;
-    } else {
-      this.setState({
-        noti: ""
-      });
-    }
     if (!this.isvalidPhone(this.state.phone_number)) {
       this.setState({
         noti: "Phone invalid"
@@ -196,46 +156,6 @@ class User extends Component {
     if (!this.isvalidEmail(email)) {
       this.setState({
         noti: "Email invalid"
-      });
-      return;
-    } else {
-      this.setState({
-        noti: ""
-      });
-    }
-    if (password.length < 6) {
-      this.setState({
-        noti: "Password invalid"
-      });
-      return;
-    } else {
-      this.setState({
-        noti: ""
-      });
-    }
-    if (firstName.length < 3) {
-      this.setState({
-        noti: "First name invalid"
-      });
-      return;
-    } else {
-      this.setState({
-        noti: ""
-      });
-    }
-    if (lastName.length < 3) {
-      this.setState({
-        noti: "Last name invalid"
-      });
-      return;
-    } else {
-      this.setState({
-        noti: ""
-      });
-    }
-    if (address.length < 3) {
-      this.setState({
-        noti: "Address invalid"
       });
       return;
     } else {
