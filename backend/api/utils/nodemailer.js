@@ -33,7 +33,7 @@ exports.sendEmail = async (email, token) => {
 
 exports.sendEmailForgotPassword = async (email, token) => {
     let mailOptions = {
-        from: '"SHOOPER 👻" <purplerose2305@gmail.com>', // sender address
+        from: '"Mỹ phẩm 👻" <purplerose2305@gmail.com>', // sender address
         to: email, // list of receivers
         subject: 'Forgot password Verification Token', // Subject line
         html: '<b>Forgot password</b>'

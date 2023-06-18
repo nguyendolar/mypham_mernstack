@@ -18,7 +18,7 @@
 
         background: #eeeeee;
 
-        font-family: 'Lato', sans-serif;
+        font-family: 'Aria', sans-serif;
 
         padding: 0px !important;
 
@@ -687,7 +687,7 @@
 
     ul.sidebar-menu li a{
 
-        color: #d0d8df;
+        color: white;
 
         text-decoration: none;
 
@@ -697,7 +697,7 @@
 
         font-size: 16px;
 
-        font-weight: 300;
+        font-weight: bold;
 
         outline: none;
 
@@ -727,7 +727,7 @@
 
     ul.sidebar-menu li.active a, ul.sidebar-menu li a:hover, ul.sidebar-menu li a:focus {
 
-        background: #4e73df;
+        background: #729A49;
 
         color: #fff;
 

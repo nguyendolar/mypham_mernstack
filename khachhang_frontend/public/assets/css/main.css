@@ -8,7 +8,7 @@
 
       body {
         font-family: 'Roboto', sans-serif;
-      background-color: #fafefd;
+      background-color: #FFFFE0;
         position: relative;
         font-weight:400px;
       }
@@ -784,7 +784,7 @@
       .left-sidebar h2:before{
         content: " ";
         position: absolute;
-        background: #fff;
+        background: #FFFFE0;
         bottom: -6px;
         width: 130px;
         height: 30px;
@@ -796,7 +796,7 @@
       h2.title:before{
         content: " ";
         position: absolute;
-        background: #fff;
+        background: #FFFFE0;
         bottom: -6px;
         width: 220px;
         height: 30px;
@@ -806,7 +806,7 @@
       }
 
       .category-products .panel {
-        background-color: #FFFFFF;
+        background-color: #FFFFE0;
         border: 0px;
         border-radius: 0px;
         box-shadow:none;
@@ -814,7 +814,7 @@
       }
 
       .category-products .panel-default .panel-heading {
-        background-color: #FFFFFF;
+        background-color: #FFFFE0;
         border: 0 none;
         color: #FFFFFF;
         padding: 5px 20px;
@@ -901,7 +901,7 @@
       }
 
       .well {
-        background-color: #FFFFFF;
+        background-color: #FFFFE0;
         border: 1px solid #F7F7F0;
         border-radius: 4px;
         box-shadow: none;
