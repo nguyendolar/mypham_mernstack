@@ -32,7 +32,8 @@ class BillContainer extends Component {
     }
     if (nextProps.page !== this.props.page)
     {
-      this.props.productActions.getBill("99", nextProps.page);
+      var status = nextProps.bill
+      this.props.productActions.getBill(status[0].issend, nextProps.page);
     }
   }
   handleClickUser = () => {
