@@ -19,6 +19,10 @@ const Home = ({ islogin, logout, category,
                     islogin={islogin}
                     logout={() => logout()}
                     history={history}
+                    sortType={sortType}
+                    setSortType={(value) => setSortType(value)}
+                    setSearchText={(value) => setSearchText(value)}
+                    searchTextSubmit={() =>searchTextSubmit()}
                 />
                 <HeaderBottom
                     sortType={sortType}

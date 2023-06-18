@@ -58,24 +58,7 @@ class HeaderBottom extends Component {
             <div className="header-bottom">
                 <div className="container">
                     <div className="row header-bot">
-                        <div className="col-sm-8">
-                            <div className="navbar-header">
-                               
-                            </div>
-                           
-                        </div>
-                        <div className="col-sm-4">
-                            <div className="search_box pull-right">
-                                <input
-                                    type="text"
-                                    placeholder="Search"
-                                    onChange={(e) => this.props.setSearchText(e.target.value)}
-                                    onKeyUp={(e) => this.handeSearch(e.keyCode)}
-                                />
-                            </div>
-                        </div>
-                       
-
+                       <img src='https://adsplus.vn/wp-content/uploads/2018/12/nguyen-tac-thiet-ke-banner-pham-dep-ngat-ngay-08-1.jpg'/>
                     </div>
                 </div>
             </div>

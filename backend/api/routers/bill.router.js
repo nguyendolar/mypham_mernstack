@@ -19,11 +19,11 @@ module.exports = (app) => {
         .post(bill_controller.statisticaRevenueYear);
     app.route('/bill/statistical/revenue/quauter')
         .post(bill_controller.statisticaRevenueQuauter);
-        app.route('/bill/status/99')
+        app.route('/bill/status/99/:page')
         .get(bill_controller.getBillNoVerify);
-    app.route('/bill/status/1')
+    app.route('/bill/status/1/:page')
         .get(bill_controller.getBillVerify);
-    app.route('/bill/status/0')
+    app.route('/bill/status/0/:page')
         .get(bill_controller.getProcessing);
         
     app.route('/bill/updateissend')

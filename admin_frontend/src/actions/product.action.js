@@ -408,12 +408,13 @@ export const billSetTotalPage = (totalpage) => ({
     totalpage
 })
 export const getBill = (status) => async(dispatch, getState) => {
-    let link = "http://localhost:8080/bill/status/99"
+    console.log("nha",status);
+    let link = "http://localhost:8080/bill/status/99/" + getState().productReducers.author.page
     if(status === "0") {
-        link = "http://localhost:8080/bill/status/0"
+        link = "http://localhost:8080/bill/status/0/" + getState().productReducers.author.page
     }
     if(status === "1") {
-        link = "http://localhost:8080/bill/status/1"
+        link = "http://localhost:8080/bill/status/1/" + getState().productReducers.author.page
     }
     let res = null
     try {
