@@ -336,7 +336,7 @@ class ContentCart extends Component {
                       className="btn btn-default update"
                       onClick={() => this.handlePayment()}
                     >
-                      Payment
+                      Order
                     </button>
                     <Link class="btn btn-default check_out" to={"/"}>
                       Continue shopping
