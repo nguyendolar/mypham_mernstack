@@ -4,7 +4,7 @@ class Product extends Component {
   constructor() {
     super();
     this.state = {
-      sizeall : ['Xám','Đen','Bạc','Trắng'],
+      sizeall: ['Xám', 'Đen', 'Bạc', 'Trắng'],
       pagination: [],
       product: null,
       file: null,
@@ -25,48 +25,57 @@ class Product extends Component {
       id: null,
       sizes: new Set(),
       checksizes: '',
-      check: [false,false,false,false,false,false]
+      check: [false, false, false, false, false, false]
     };
   }
   componentWillMount() {
     let tmp = [];
-    for (let i = 1; i <= this.props.totalpage; i++) {
+    for (let i = 1; i <= this.props.totalpage; i++)
+    {
       tmp.push(i);
     }
     this.setState({ pagination: tmp });
     this.checkedCheckbox = new Set();
   }
   componentWillReceiveProps(nextProps) {
-    if (nextProps.totalpage !== this.props.totalpage) {
+    if (nextProps.totalpage !== this.props.totalpage)
+    {
       let tmp = [];
-      for (let i = 1; i <= nextProps.totalpage; i++) {
+      for (let i = 1; i <= nextProps.totalpage; i++)
+      {
         tmp.push(i);
       }
       this.setState({ pagination: tmp });
     }
-    if (nextProps.product !== null) {
+    if (nextProps.product !== null)
+    {
       this.setState({
         imagePreviewUrl: nextProps.product.img
       });
     }
-    if (nextProps.isadd === true) {
+    if (nextProps.isadd === true)
+    {
       this.reset()
-    } 
-    if(nextProps.isupdate === true) {
+    }
+    if (nextProps.isupdate === true)
+    {
       this.reset()
     }
   }
   renderPagination() {
-    if (this.state.pagination.length === 0) {
+    if (this.state.pagination.length === 0)
+    {
       return null;
-    } else {
+    } else
+    {
       return (
         <ul className="pagination pagination-custom col-md-6 offset-md-3">
           <li onClick={() => this.props.backPage()}>
             <a>&laquo;</a>
           </li>
           {this.state.pagination.map((element, index) => {
-            if (this.props.page === element) {
+            if (this.props.page === element)
+            {
               return (
                 <li
                   className="active"
@@ -75,7 +84,8 @@ class Product extends Component {
                   <a>{element}</a>
                 </li>
               );
-            } else {
+            } else
+            {
               return (
                 <li onClick={() => this.props.setPage(element)}>
                   <a>{element}</a>
@@ -91,7 +101,7 @@ class Product extends Component {
     }
   }
   handleChangeImg = img => {
-    if(img === undefined)
+    if (img === undefined)
       return
     let reader = new FileReader();
     reader.onloadend = () => {
@@ -105,14 +115,17 @@ class Product extends Component {
   invalidPrice = t => {
     var str = t.toString();
     let count = 0;
-    for (let i = 0; i < str.length; i++) {
+    for (let i = 0; i < str.length; i++)
+    {
       if (str.charAt(i) == "+" || str.charAt(i) == "-") count++;
       else break;
     }
     str = str.substring(count, str.length);
     count = 0;
-    for (let i = 0; i < str.length; i++) {
-      if (str.charAt(i) == ".") {
+    for (let i = 0; i < str.length; i++)
+    {
+      if (str.charAt(i) == ".")
+      {
         count++;
       }
       if (str.charAt(i) < "0" || str.charAt(i) > "9") return false;
@@ -131,53 +144,63 @@ class Product extends Component {
       file,
       sizes
     } = this.state;
-    if (name.length <= 0) {
+    if (name.length <= 0)
+    {
       this.setState({
         noti: "Name invalid"
       });
       return;
-    } else {
+    } else
+    {
       this.setState({
         noti: ""
       });
     }
-    if (release_date === null) {
+    if (release_date === null)
+    {
       this.setState({
         noti: "Day invalid"
       });
       return;
-    } else {
+    } else
+    {
       this.setState({
         noti: ""
       });
     }
-    if (!this.invalidPrice(price)) {
+    if (!this.invalidPrice(price))
+    {
       this.setState({
         noti: "Price invalid"
       });
       return;
-    } else {
+    } else
+    {
       this.setState({
         noti: ""
       });
     }
-    if (category === "") {
+    if (category === "")
+    {
       this.setState({
         noti: "Category invalid"
       });
       return;
-    } else {
+    } else
+    {
       this.setState({
         noti: ""
       });
     }
-    
-    if (file === null) {
+
+    if (file === null)
+    {
       this.setState({
         noti: "File invalid"
       });
       return;
-    } else {
+    } else
+    {
       this.setState({
         noti: ""
       });
@@ -202,59 +225,69 @@ class Product extends Component {
       release_date,
       describe,
       file,
-      id, 
+      id,
       img,
       sizes
     } = this.state;
-    if (name.length <= 0) {
+    if (name.length <= 0)
+    {
       this.setState({
         noti: "Name invalid"
       });
       return;
-    } else {
+    } else
+    {
       this.setState({
         noti: ""
       });
     }
-    if (release_date === null) {
+    if (release_date === null)
+    {
       this.setState({
         noti: "Day invalid"
       });
       return;
-    } else {
+    } else
+    {
       this.setState({
         noti: ""
       });
     }
-    if (!this.invalidPrice(price)) {
+    if (!this.invalidPrice(price))
+    {
       this.setState({
         noti: "Price invalid"
       });
       return;
-    } else {
+    } else
+    {
       this.setState({
         noti: ""
       });
     }
-    if (category === "") {
+    if (category === "")
+    {
       this.setState({
         noti: "Category invalid"
       });
       return;
-    } else {
+    } else
+    {
       this.setState({
         noti: ""
       });
     }
-   
 
-    
-    if (file === null && img === '' ) {
+
+
+    if (file === null && img === '')
+    {
       this.setState({
         noti: "File invalid"
       });
       return;
-    } else {
+    } else
+    {
       this.setState({
         noti: ""
       });
@@ -272,7 +305,8 @@ class Product extends Component {
     );
   };
   renderBtnSubmit = () => {
-    if (this.state.curr === "add") {
+    if (this.state.curr === "add")
+    {
       return (
         <div className="form-group">
           <div className="col-lg-offset-2 col-lg-10">
@@ -290,7 +324,8 @@ class Product extends Component {
           </div>
         </div>
       );
-    } else {
+    } else
+    {
       return (
         <div className="form-group">
           <div className="col-lg-offset-2 col-lg-10">
@@ -313,28 +348,29 @@ class Product extends Component {
   reset = () => {
     this.setState({
       noti: "",
-        name: "",
-        file: null,
-        imagePreviewUrl: null,
-        curr: "add",
-        category: "category",
-   
-      
-        name: "",
-        release_date: null,
-        price: "",
-        img: "",
-        describe: "",
-        id_nsx: "",
-      
-        id_category: "",
-        noti: "",
-        id: null,
-        sizes:[]
+      name: "",
+      file: null,
+      imagePreviewUrl: null,
+      curr: "add",
+      category: "category",
+
+
+      name: "",
+      release_date: "",
+      price: "",
+      img: "",
+      describe: "",
+      id_nsx: "",
+
+      id_category: "",
+      noti: "",
+      id: null,
+      sizes: []
     })
   }
   renderMenuCategory = () => {
-    if (this.props.category) {
+    if (this.props.category)
+    {
       return this.props.category.map((element, index) => {
         return (
           <li
@@ -349,13 +385,15 @@ class Product extends Component {
           </li>
         );
       });
-    } else {
+    } else
+    {
       return null;
     }
   };
 
   renderMenuCategory = () => {
-    if (this.props.category) {
+    if (this.props.category)
+    {
       return this.props.category.map((element, index) => {
         return (
           <li
@@ -370,54 +408,61 @@ class Product extends Component {
           </li>
         );
       });
-    } else {
+    } else
+    {
       return null;
     }
   };
   getNameCategoryByID = id => {
-    for (let i = 0; i < this.props.category.length; i++) {
+    for (let i = 0; i < this.props.category.length; i++)
+    {
       if (id === this.props.category[i]._id) return this.props.category[i].name;
     }
   };
   handleCheckChieldElement = (event, key) => {
     let sizecheck = this.state.check;
     sizecheck[key] = !sizecheck[key];
-    
-    if(this.checkedCheckbox.has(event)){
+
+    if (this.checkedCheckbox.has(event))
+    {
       this.checkedCheckbox.delete(event);
-    }else{
+    } else
+    {
       this.checkedCheckbox.add(event);
     }
     this.setState({
       sizes: this.checkedCheckbox
     })
-   
+
   }
-  checkboxSize= () => {
-   
-    const sizeall =  this.state.sizeall.map((value,key)=>{
-      return <label className='size' key={key} style={{marginRight: 1 + 'em'}}><input  name='size' type='checkbox' checked={this.state.check[key]} value={value} onChange={()=> this.handleCheckChieldElement(value, key)}  />{value}</label>
+  checkboxSize = () => {
+
+    const sizeall = this.state.sizeall.map((value, key) => {
+      return <label className='size' key={key} style={{ marginRight: 1 + 'em' }}><input name='size' type='checkbox' checked={this.state.check[key]} value={value} onChange={() => this.handleCheckChieldElement(value, key)} />{value}</label>
     })
     return sizeall;
   }
-  handleUpdate = (element) =>{
-    this.checkedCheckbox =  new Set();
-    let size =  element.size[0].split(',').sort()
+  handleUpdate = (element) => {
+    this.checkedCheckbox = new Set();
+    let size = element.size[0].split(',').sort()
     let checksize = this.state.check;
 
-    this.state.sizeall.map((item,key)=>{
+    this.state.sizeall.map((item, key) => {
 
-      for (let i=0; i<size.length; i++){
-        if(size[i] === item){
+      for (let i = 0; i < size.length; i++)
+      {
+        if (size[i] === item)
+        {
           checksize[key] = true;
           this.checkedCheckbox.add(item)
           break;
-        }else{
+        } else
+        {
           checksize[key] = false;
-    
+
         }
       }
-     
+
     })
     this.setState({
       curr: "update",
@@ -439,8 +484,9 @@ class Product extends Component {
     })
   }
   handeSearch = (e) => {
-    if(e === 13) {
-        this.props.searchTextSubmit()
+    if (e === 13)
+    {
+      this.props.searchTextSubmit()
     }
   }
   render() {
@@ -463,12 +509,12 @@ class Product extends Component {
                 <i className="fa fa-th-list" />Product Manager
               </li>
               <li>
-              <div className="navbar-form">
-                  <input className="form-control" placeholder="Search" type="text" 
-                     onChange={(e) => this.props.setSearchText(e.target.value)}
-                     onKeyUp={(e) => this.handeSearch(e.keyCode)}
+                <div className="navbar-form">
+                  <input className="form-control" placeholder="Search" type="text"
+                    onChange={(e) => this.props.setSearchText(e.target.value)}
+                    onKeyUp={(e) => this.handeSearch(e.keyCode)}
                   />
-              </div>
+                </div>
               </li>
             </ol>
           </div>
@@ -500,8 +546,8 @@ class Product extends Component {
                     return (
                       <tr>
                         <td>{element.name}</td>
-                        <td>{element.release_date.slice(0,10)}</td>
-                        <td>{new Intl.NumberFormat('de-DE', {currency: 'EUR' }).format(element.price)}<sup>đ</sup></td>
+                        <td>{element.release_date.slice(0, 10)}</td>
+                        <td>{new Intl.NumberFormat('de-DE', { currency: 'EUR' }).format(element.price)}<sup>đ</sup></td>
                         <td style={{ width: "40%" }}>{element.describe}</td>
                         <td>
                           <div className="btn-group">

@@ -8,48 +8,59 @@ import axios from 'axios'
 class HistoryPurchase extends Component {
   constructor(props) {
     super(props);
-    this.state={
-      issend:'99',
+    this.state = {
+      issend: '99',
       product_id: '',
-      isComment : false,
+      isComment: false,
       name: "",
       email: "",
       comment: "",
-      paymentUrl:"",
-      billId:""
+      paymentUrl: "",
+      billId: ""
     }
 
   }
-  componentDidMount = async () =>{
+  componentDidMount = async () => {
     function getNullValue(str) {
       const arr = str.split('/');
       return arr.pop();
     }
-    
+    console.log(this.props.history.location); // "null"
     const str = this.props.history.location.pathname;
     const billId = getNullValue(str);
     console.log(billId); // "null"
 
-    if(billId != "null"){
-      console.log(`${'http://localhost:8080/change-payment-status/'+ billId}`)
-      await axios.get(`${'http://localhost:8080/bill/change-payment-status/'+ billId}`);
-      window.location.href ="http://localhost:3000/purchase_history/null"
+    if (billId != "null")
+    {
+      console.log(`${'http://localhost:8080/change-payment-status/' + billId}`)
+      const url = new URL(window.location.href);
+      const searchParams = new URLSearchParams(url.search);
+      const errorCode = searchParams.get('errorCode');
+      if (errorCode === "0")
+      {
+        await axios.get(`${'http://localhost:8080/bill/change-payment-status/' + billId}`);
+        window.location.href = "http://localhost:3000/purchase_history/null"
+      }
+
     }
-    this.setState({billId:billId});
+    this.setState({ billId: billId });
   }
   componentWillMount = async () => {
-   
+
     let tmp = [];
-    for (let i = 1; i <= this.props.totalpage; i++) {
+    for (let i = 1; i <= this.props.totalpage; i++)
+    {
       tmp.push(i);
     }
     this.setState({ pagination: tmp });
-    if (storeConfig.getUser() !== null) {
+    if (storeConfig.getUser() !== null)
+    {
       this.setState({
         name: storeConfig.getUser().firstName,
         email: storeConfig.getUser().email
       });
-    } else {
+    } else
+    {
       this.setState({
         name: "",
         email: ""
@@ -65,18 +76,20 @@ class HistoryPurchase extends Component {
   }
 
   renderBill = () => {
-    if(this.state.issend === '99'){
-      let count =0;
+    if (this.state.issend === '99')
+    {
+      let count = 0;
       let xhtml = this.props.purchaseHistory.map((element, index) => {
-        if (element.issend === '99') {
+        if (element.issend === '99')
+        {
           count++;
           return (
-            <div className="table-responsive cart_info" style={{marginBottom: "50px"}}>
+            <div className="table-responsive cart_info" style={{ marginBottom: "50px" }}>
               <p className='cart_total_price'>Đang chờ xử lý</p>
               <span>Date: {new Date(element.date).toDateString("yyyy-MM-dd")}</span>
-              <p style={{marginLeft: "5px"}}>{element.isPayment == false ? "Chưa thanh toán" : "Đã thanh toán"}</p>
-              <p className='cart_total_price'>Total: {new Intl.NumberFormat('de-DE', {currency: 'EUR' }).format(this.caculatorTotalBill(element.products))}<sup>đ</sup></p>
-              
+              <p style={{ marginLeft: "5px" }}>{element.isPayment == false ? "Chưa thanh toán" : "Đã thanh toán"}</p>
+              <p className='cart_total_price'>Total: {new Intl.NumberFormat('de-DE', { currency: 'EUR' }).format(this.caculatorTotalBill(element.products))}<sup>đ</sup></p>
+
               <table className="table table-condensed">
                 <thead>
                   <tr className="cart_menu">
@@ -89,88 +102,91 @@ class HistoryPurchase extends Component {
                   </tr>
                 </thead>
                 <tbody>
-                {element.products.map((item, index) => {
-                  return (
-                    <tr>
-                    <td className="cart_product">
-                      <a href=""><img src={item.img}/></a>
-                    </td>
-                    <td className="cart_description">
-                      <h4>
-                        <a>{item.name} </a>
-                        
-                      </h4>
-              
-                    </td>
-                    <td className="cart_price">
-                      <p>{new Intl.NumberFormat('de-DE', {currency: 'EUR' }).format(item.price)}<sup>đ</sup></p>
-                    </td>
-                    <td className="cart_quantity">
-                      <div className="cart_quantity_button">
-                        <input
-                          className="cart_quantity_input"
-                          type="text"
-                          name="quantity"
-                          value={item.count}
-                          autocomplete="off"
-                          size="2"
-                        />
-                      </div>
-                    </td>
-                    <td className="cart_total">
-                      <p className="cart_total_price">{new Intl.NumberFormat('de-DE', {currency: 'EUR' }).format(item.count * item.price)}<sup>đ</sup></p>
-                    </td>
-                  </tr>
-                  )
-                })}
+                  {element.products.map((item, index) => {
+                    return (
+                      <tr>
+                        <td className="cart_product">
+                          <a href=""><img src={item.img} /></a>
+                        </td>
+                        <td className="cart_description">
+                          <h4>
+                            <a>{item.name} </a>
+
+                          </h4>
+
+                        </td>
+                        <td className="cart_price">
+                          <p>{new Intl.NumberFormat('de-DE', { currency: 'EUR' }).format(item.price)}<sup>đ</sup></p>
+                        </td>
+                        <td className="cart_quantity">
+                          <div className="cart_quantity_button">
+                            <input
+                              className="cart_quantity_input"
+                              type="text"
+                              name="quantity"
+                              value={item.count}
+                              autocomplete="off"
+                              size="2"
+                            />
+                          </div>
+                        </td>
+                        <td className="cart_total">
+                          <p className="cart_total_price">{new Intl.NumberFormat('de-DE', { currency: 'EUR' }).format(item.count * item.price)}<sup>đ</sup></p>
+                        </td>
+                      </tr>
+                    )
+                  })}
                 </tbody>
               </table>
               <div className='login-form'>
-                <div className='delete-cart' style={{marginLeft: "700px"}}>
-                  {element.isPayment == false ? <button  onClick={() => this.props.deleteBill(element._id)} className="destroy btn btn-default">Hủy Đơn Hàng</button>:null}
-               
+                <div className='delete-cart' style={{ marginLeft: "700px" }}>
+                  {element.isPayment == false ? <button onClick={() => this.props.deleteBill(element._id)} className="destroy btn btn-default">Hủy Đơn Hàng</button> : null}
+
                 </div>
                 <div className='delete-cart'>
-                {element.isPayment == false ? <button onClick={(e)=>this.handleSubmitPayment(element.total,element._id,e)} className="destroy btn btn-default">Thanh toán Momo</button>:null}
-                
+                  {element.isPayment == false ? <button onClick={(e) => this.handleSubmitPayment(element.total, element._id, e)} className="destroy btn btn-default">Thanh toán Momo</button> : null}
+
                 </div>
               </div>
-              <hr/>
+              <hr />
             </div>
           )
         }
-       
+
       })
-      if(count === 0){
+      if (count === 0)
+      {
         xhtml = <div className='no-bill'>
-        <div className="logo-404">
-        <div>
-        <h3 className='title'>Đang chờ xử lý</h3>
-          <div className='null-cart'>
-            <img src="/assets/images/home/logo1.png" alt="" />
-            
+          <div className="logo-404">
+            <div>
+              <h3 className='title'>Đang chờ xử lý</h3>
+              <div className='null-cart'>
+                <img src="/assets/images/home/logo1.png" alt="" />
+
+              </div>
+              <h3 className='title'>Không Có Đơn Hàng</h3>
+            </div>
+
           </div>
-          <h3 className='title'>Không Có Đơn Hàng</h3>
-          </div>
-          
-        </div>
         </div>
       }
       return xhtml;
     }
-    
-    if(this.state.issend === '0'){
-      let count =0;
+
+    if (this.state.issend === '0')
+    {
+      let count = 0;
       let xhtml = this.props.purchaseHistory.map((element, index) => {
-        if (element.issend === '0') {
+        if (element.issend === '0')
+        {
           count++;
           return (
-            <div className="table-responsive cart_info" style={{marginBottom: "50px"}}>
+            <div className="table-responsive cart_info" style={{ marginBottom: "50px" }}>
               <p className='cart_total_price'>Đang giao hàng</p>
               <span>Date: {new Date(element.date).toDateString("yyyy-MM-dd")}</span>
-              <p style={{marginLeft: "5px"}}>{element.isPayment == false ? "Chưa thanh toán" : "Đã thanh toán"}</p>
-              <p className='cart_total_price'>Total: {new Intl.NumberFormat('de-DE', {currency: 'EUR' }).format(this.caculatorTotalBill(element.products))}<sup>đ</sup></p>
-              
+              <p style={{ marginLeft: "5px" }}>{element.isPayment == false ? "Chưa thanh toán" : "Đã thanh toán"}</p>
+              <p className='cart_total_price'>Total: {new Intl.NumberFormat('de-DE', { currency: 'EUR' }).format(this.caculatorTotalBill(element.products))}<sup>đ</sup></p>
+
               <table className="table table-condensed">
                 <thead>
                   <tr className="cart_menu">
@@ -183,79 +199,82 @@ class HistoryPurchase extends Component {
                   </tr>
                 </thead>
                 <tbody>
-                {element.products.map((item, index) => {
-                  return (
-                    <tr>
-                    <td className="cart_product">
-                      <a href=""><img src={item.img}/></a>
-                    </td>
-                    <td className="cart_description">
-                      <h4>
-                        <a>{item.name} </a>
-                        <p>Màu: {item.size}</p>
+                  {element.products.map((item, index) => {
+                    return (
+                      <tr>
+                        <td className="cart_product">
+                          <a href=""><img src={item.img} /></a>
+                        </td>
+                        <td className="cart_description">
+                          <h4>
+                            <a>{item.name} </a>
+                            <p>Màu: {item.size}</p>
 
-                      </h4>
-              
-                    </td>
-                    <td className="cart_price">
-                      <p>{new Intl.NumberFormat('de-DE', {currency: 'EUR' }).format(item.price)}<sup>đ</sup></p>
-                    </td>
-                    <td className="cart_quantity">
-                      <div className="cart_quantity_button">
-                        <input
-                          className="cart_quantity_input"
-                          type="text"
-                          name="quantity"
-                          value={item.count}
-                          autocomplete="off"
-                          size="2"
-                        />
-                      </div>
-                    </td>
-                    <td className="cart_total">
-                      <p className="cart_total_price">{new Intl.NumberFormat('de-DE', {currency: 'EUR' }).format(item.count * item.price)}<sup>đ</sup></p>
-                    </td>
-                  </tr>
-                  )
-                })}
+                          </h4>
+
+                        </td>
+                        <td className="cart_price">
+                          <p>{new Intl.NumberFormat('de-DE', { currency: 'EUR' }).format(item.price)}<sup>đ</sup></p>
+                        </td>
+                        <td className="cart_quantity">
+                          <div className="cart_quantity_button">
+                            <input
+                              className="cart_quantity_input"
+                              type="text"
+                              name="quantity"
+                              value={item.count}
+                              autocomplete="off"
+                              size="2"
+                            />
+                          </div>
+                        </td>
+                        <td className="cart_total">
+                          <p className="cart_total_price">{new Intl.NumberFormat('de-DE', { currency: 'EUR' }).format(item.count * item.price)}<sup>đ</sup></p>
+                        </td>
+                      </tr>
+                    )
+                  })}
                 </tbody>
               </table>
-              
-              <hr/>
+
+              <hr />
             </div>
           )
         }
-       
+
       })
-      if(count === 0){
+      if (count === 0)
+      {
         xhtml = <div className='no-bill'>
-        <div className="logo-404">
-        <div>
-        <h3 className='title'>Đang giao hàng</h3>
-          <div className='null-cart'>
-            <img src="/assets/images/home/logo1.png" alt="" />
-            
+          <div className="logo-404">
+            <div>
+              <h3 className='title'>Đang giao hàng</h3>
+              <div className='null-cart'>
+                <img src="/assets/images/home/logo1.png" alt="" />
+
+              </div>
+              <h3 className='title'>Không Có Đơn Hàng</h3>
+            </div>
           </div>
-          <h3 className='title'>Không Có Đơn Hàng</h3>
-          </div>
-        </div>
         </div>
       }
       return xhtml;
     }
 
-    if(this.state.issend === '1'){
-      let count =0;
+    if (this.state.issend === '1')
+    {
+      let count = 0;
       let xhtml = this.props.purchaseHistory.map((element, index) => {
-        if (element.issend === '1') {
+        if (element.issend === '1')
+        {
           count++;
           return (
-            <div className="table-responsive cart_info" style={{marginBottom: "50px"}}>
+            <div className="table-responsive cart_info" style={{ marginBottom: "50px" }}>
               <p className='cart_total_price'>Đã giao hàng</p>
               <span>Date: {new Date(element.date).toDateString("yyyy-MM-dd")}</span>
-              <p style={{marginLeft: "5px"}}>{element.isPayment == false ? "Chưa thanh toán" : "Đã thanh toán"}</p>
-              <p className='cart_total_price'>Total: {new Intl.NumberFormat('de-DE', {currency: 'EUR' }).format(this.caculatorTotalBill(element.products))}<sup>đ</sup> </p>
-              
+              <p style={{ marginLeft: "5px" }}>{element.isPayment == false ? "Chưa thanh toán" : "Đã thanh toán"}</p>
+              <p className='cart_total_price'>Total: {new Intl.NumberFormat('de-DE', { currency: 'EUR' }).format(this.caculatorTotalBill(element.products))}<sup>đ</sup> </p>
+
               <table className="table table-condensed">
                 <thead>
                   <tr className="cart_menu">
@@ -268,98 +287,103 @@ class HistoryPurchase extends Component {
                   </tr>
                 </thead>
                 <tbody>
-                {element.products.map((item, index) => {
-                  return (
-                   
-                    <tr>
-                    <td className="cart_product">
-                      <a href=""><img src={item.img}/></a>
-                    </td>
-                    <td className="cart_description">
-                      <h4>
-                        <a>{item.name} </a>
-                        <p>Màu: {item.size}</p>
+                  {element.products.map((item, index) => {
+                    return (
 
-                      </h4>
-              
-                    </td>
-                    <td className="cart_price">
-                      <p>{new Intl.NumberFormat('de-DE', {currency: 'EUR' }).format(item.price)}<sup>đ</sup></p>
-                    </td>
-                    <td className="cart_quantity">
-                      <div className="cart_quantity_button">
-                        <input
-                          className="cart_quantity_input"
-                          type="text"
-                          name="quantity"
-                          value={item.count}
-                          autocomplete="off"
-                          size="2"
-                        />
-                      </div>
-                    </td>
-                    <td className="cart_total">
-                      <p className="cart_total_price">{new Intl.NumberFormat('de-DE', {currency: 'EUR' }).format(item.count * item.price)}<sup>đ</sup></p>
-                      {/* <button onClick={()=>this.handleClickComment(item._id)}>Bình Luận</button> */}
-                    </td>
-                  </tr>
-                  
-                  )
-                })}
+                      <tr>
+                        <td className="cart_product">
+                          <a href=""><img src={item.img} /></a>
+                        </td>
+                        <td className="cart_description">
+                          <h4>
+                            <a>{item.name} </a>
+                            <p>Màu: {item.size}</p>
+
+                          </h4>
+
+                        </td>
+                        <td className="cart_price">
+                          <p>{new Intl.NumberFormat('de-DE', { currency: 'EUR' }).format(item.price)}<sup>đ</sup></p>
+                        </td>
+                        <td className="cart_quantity">
+                          <div className="cart_quantity_button">
+                            <input
+                              className="cart_quantity_input"
+                              type="text"
+                              name="quantity"
+                              value={item.count}
+                              autocomplete="off"
+                              size="2"
+                            />
+                          </div>
+                        </td>
+                        <td className="cart_total">
+                          <p className="cart_total_price">{new Intl.NumberFormat('de-DE', { currency: 'EUR' }).format(item.count * item.price)}<sup>đ</sup></p>
+                          {/* <button onClick={()=>this.handleClickComment(item._id)}>Bình Luận</button> */}
+                        </td>
+                      </tr>
+
+                    )
+                  })}
                 </tbody>
               </table>
-              
-              <hr/>
+
+              <hr />
             </div>
           )
         }
-       
+
       })
-      if(count === 0){
+      if (count === 0)
+      {
         xhtml = <div className='no-bill'>
-        <div className="logo-404">
-          <div>
-          <h3 className='title'>Đã giao hàng</h3>
-          <div className='null-cart'>
-            <img src="/assets/images/home/logo1.png" alt="" />
-            
+          <div className="logo-404">
+            <div>
+              <h3 className='title'>Đã giao hàng</h3>
+              <div className='null-cart'>
+                <img src="/assets/images/home/logo1.png" alt="" />
+
+              </div>
+              <h3 className='title'>Không Có Đơn Hàng</h3>
+            </div>
+
           </div>
-          <h3 className='title'>Không Có Đơn Hàng</h3>
-          </div>
-         
-        </div>
         </div>
       }
       return xhtml;
     }
 
   }
-  handleClick99(){
+  handleClick99() {
     this.setState({
-      issend:'99'
+      issend: '99'
     })
   }
-  handleClick0(){
+  handleClick0() {
     this.setState({
-      issend:'0'
+      issend: '0'
     })
   }
-  handleClick1(){
+  handleClick1() {
     this.setState({
-      issend:'1'
+      issend: '1'
     })
   }
   submitComment = () => {
-    if (this.state.name === "") {
+    if (this.state.name === "")
+    {
       this.setState({ notificationComment: "Name must not be blank " });
       return;
-    } else {
+    } else
+    {
       this.setState({ notificationComment: "" });
     }
-    if (this.state.comment === "") {
+    if (this.state.comment === "")
+    {
       this.setState({ notificationComment: "Comment must not be blank " });
       return;
-    } else {
+    } else
+    {
       this.setState({ notificationComment: "" });
     }
     this.props.submitComment(
@@ -368,57 +392,58 @@ class HistoryPurchase extends Component {
       this.state.comment,
       this.state.id_product
     );
-    this.setState({ comment: "" , isComment: false});
+    this.setState({ comment: "", isComment: false });
   };
   submitPay = () => {
-      this.setState({ notificationComment: "Name must not be blank " });
-      return;
+    this.setState({ notificationComment: "Name must not be blank " });
+    return;
   };
-  handleClickComment = (_id) =>{
-   
+  handleClickComment = (_id) => {
+
     this.setState({
-      isComment:true,
+      isComment: true,
       id_product: _id,
     })
   }
   render() {
-    let xhtml='';
-  
-    if(this.state.isComment){
+    let xhtml = '';
+
+    if (this.state.isComment)
+    {
       xhtml = <div className='aler-box'>
         <div className='btn-close ' onClick={() => this.setState({ isComment: false })}>
           X
         </div>
-      <div className='aler-title'>
-        <h3 className='title'>Đánh giá của bạn về sản phẩn</h3>
+        <div className='aler-title'>
+          <h3 className='title'>Đánh giá của bạn về sản phẩn</h3>
+        </div>
+        <div className='aler-body'>
+          <form action="#">
+
+            <textarea
+              value={this.state.comment}
+              onChange={e =>
+                this.setState({ comment: e.target.value })
+              }
+            />
+            <button
+              type="button"
+              className="btn btn-default pull-right"
+              onClick={() => this.submitComment()}
+            >
+              Bình Luận
+            </button>
+          </form>
+        </div>
+        <div className='alert-footer'>
+          <button className="roduct-variation" onClick={() => this.setState({ isComment: false })}>
+            Cancel
+
+          </button>
+        </div>
       </div>
-      <div className='aler-body'>
-      <form action="#">
-                        
-                        <textarea
-                          value={this.state.comment}
-                          onChange={e =>
-                            this.setState({ comment: e.target.value })
-                          }
-                        />
-                        <button
-                          type="button"
-                          className="btn btn-default pull-right"
-                          onClick={() => this.submitComment()}
-                        >
-                          Bình Luận
-                        </button>
-                      </form>
-      </div>
-      <div className='alert-footer'>
-        <button className="roduct-variation" onClick={() => this.setState({ isComment: false })}>
-          Cancel
-          
-        </button>
-      </div>
-    </div>
     }
-    
+
     return (
       <div>
         <header id="header">
@@ -435,14 +460,14 @@ class HistoryPurchase extends Component {
                 <h2>Đơn Hàng Của Bạn</h2>
               </div>
               <div className='menu-profile container'>
-            <ul>
-              <li><button onClick={() => this.handleClick99()} className='menu-custom btn'>Đang Chờ Xử Lý</button></li>
-              <li> <button onClick={() => this.handleClick0()}  className='menu-custom btn'>Đang Giao Hàng</button></li>
-              <li> <button onClick={() => this.handleClick1()}  className='menu-custom btn'>Đã Giao Hàng</button></li>
+                <ul>
+                  <li><button onClick={() => this.handleClick99()} className='menu-custom btn'>Đang Chờ Xử Lý</button></li>
+                  <li> <button onClick={() => this.handleClick0()} className='menu-custom btn'>Đang Giao Hàng</button></li>
+                  <li> <button onClick={() => this.handleClick1()} className='menu-custom btn'>Đã Giao Hàng</button></li>
 
-            </ul>
-              <hr></hr>
-            </div>
+                </ul>
+                <hr></hr>
+              </div>
               {this.renderBill()}
             </div>
             {xhtml}
@@ -455,45 +480,47 @@ class HistoryPurchase extends Component {
         </footer>
       </div>
     );
-    
+
   }
 
-  handleSubmitPayment = async (amount,billId,e) =>{
+  handleSubmitPayment = async (amount, billId, e) => {
     e.preventDefault();
     let data = await axios.post('http://localhost:8080/payment-online', {
-                amount: amount,
-                returnUrl: `${"http://localhost:3000/purchase_history/"+billId}` 
+      amount: amount,
+      returnUrl: `${"http://localhost:3000/purchase_history/" + billId}`
     });
-    console.log("câcc",data)
-    if(data.data.data != null){
-     
+    console.log("câcc", data)
+    if (data.data.data != null)
+    {
+
       window.location.href = data.data.data
 
     }
   }
   render() {
-    let xhtml='';
-  
-    if(this.state.isComment){
+    let xhtml = '';
+
+    if (this.state.isComment)
+    {
       xhtml = <div className='aler-box1'>
         <div className='btn-close ' onClick={() => this.setState({ isComment: false })}>
           X
         </div>
-      <div className='aler-title'>
-        <h3 className='title'>Thanh toán Momo</h3>
+        <div className='aler-title'>
+          <h3 className='title'>Thanh toán Momo</h3>
+        </div>
+        <div className='aler-body'>
+          <iframe style={{ width: "100%", height: "700px" }} src={this.state.paymentUrl} title="Momo payment" />
+        </div>
+        <div className='alert-footer'>
+          <button className="roduct-variation" onClick={() => this.setState({ isComment: false })}>
+            Thanh toán
+          </button>
+
+        </div>
       </div>
-      <div className='aler-body'>
-      <iframe style={{width: "100%",height: "700px"}}  src={this.state.paymentUrl} title="Momo payment" />
-      </div>
-      <div className='alert-footer'>
-        <button className="roduct-variation" onClick={() => this.setState({ isComment: false })}>
-          Thanh toán
-        </button>
-        
-      </div>
-    </div>
     }
-    
+
     return (
       <div>
         <header id="header">
@@ -510,14 +537,14 @@ class HistoryPurchase extends Component {
                 <h2>Đơn Hàng Của Bạn</h2>
               </div>
               <div className='menu-profile container'>
-            <ul>
-              <li><button onClick={() => this.handleClick99()} className='menu-custom btn'>Đang Chờ Xử Lý</button></li>
-              <li> <button onClick={() => this.handleClick0()}  className='menu-custom btn'>Đang Giao Hàng</button></li>
-              <li> <button onClick={() => this.handleClick1()}  className='menu-custom btn'>Đã Giao Hàng</button></li>
+                <ul>
+                  <li><button onClick={() => this.handleClick99()} className='menu-custom btn'>Đang Chờ Xử Lý</button></li>
+                  <li> <button onClick={() => this.handleClick0()} className='menu-custom btn'>Đang Giao Hàng</button></li>
+                  <li> <button onClick={() => this.handleClick1()} className='menu-custom btn'>Đã Giao Hàng</button></li>
 
-            </ul>
-              <hr></hr>
-            </div>
+                </ul>
+                <hr></hr>
+              </div>
               {this.renderBill()}
             </div>
             {xhtml}
@@ -530,8 +557,8 @@ class HistoryPurchase extends Component {
         </footer>
       </div>
     );
-    
+
   }
-  
+
 }
 export default HistoryPurchase;

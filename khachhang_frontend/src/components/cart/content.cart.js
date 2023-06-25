@@ -20,25 +20,30 @@ class ContentCart extends Component {
   }
   componentWillMount() {
     let total = 0;
-    for (let i = 0; i < this.props.cart.length; i++) {
+    for (let i = 0; i < this.props.cart.length; i++)
+    {
       total +=
         Number(this.props.cart[i].price) * Number(this.props.cart[i].count);
     }
   }
   componentWillReceiveProps(nextProps) {
-    if (nextProps.cart !== this.props.cart) {
+    if (nextProps.cart !== this.props.cart)
+    {
       let total = 0;
-      for (let i = 0; i < nextProps.cart.length; i++) {
+      for (let i = 0; i < nextProps.cart.length; i++)
+      {
         total +=
           Number(nextProps.cart[i].price) * Number(nextProps.cart[i].count);
       }
       this.setState({ total: total });
     }
-    if(nextProps.ispay !== this.props.ispay && nextProps.ispay === true) {
-      this.setState({ispay: true})
+    if (nextProps.ispay !== this.props.ispay && nextProps.ispay === true)
+    {
+      this.setState({ ispay: true })
     }
-    if(nextProps.ispay !== this.props.ispay && nextProps.ispay === false) {
-      this.setState({showpaymentfail: true})
+    if (nextProps.ispay !== this.props.ispay && nextProps.ispay === false)
+    {
+      this.setState({ showpaymentfail: true })
     }
   }
   reset = () => {
@@ -56,36 +61,44 @@ class ContentCart extends Component {
     })
   }
   handlePayment = () => {
-    if (!this.props.islogin) {
+    if (!this.props.islogin)
+    {
       this.setState({ show: true });
       return;
-    } else {
+    } else
+    {
       this.setState({ show: false });
     }
     let check = true;
-    if (this.state.name.length < 3) {
+    if (this.state.name.length < 3)
+    {
       this.setState({
         notiName: "Name invalid"
       });
       check = false;
-    } else {
+    } else
+    {
       this.setState({
         notiName: ""
       });
     }
-    if (!this.isvaidPhone(this.state.phone)) {
+    if (!this.isvaidPhone(this.state.phone))
+    {
       this.setState({
         notiPhone: "Phone invalid"
       });
       check = false;
-    } else {
+    } else
+    {
       this.setState({ notiPhone: "" });
     }
-   
-    if (this.state.address === "") {
+
+    if (this.state.address === "")
+    {
       this.setState({ notiDetailAddress: "Address invalid" });
       check = false;
-    } else {
+    } else
+    {
       this.setState({ notiDetailAddress: "" });
     }
     if (check === false) return;
@@ -97,19 +110,17 @@ class ContentCart extends Component {
     );
   };
   isvaidPhone = phone => {
-    if (phone.length < 10 || phone.length > 11) return false;
-    for (let i = 0; i < phone.length; i++) {
-      if (phone.charAt(i) < "0" || phone.charAt(i) > "9") return false;
-    }
-    return true;
+    var phoneNumberPattern = /^\d{10}$/;
+    let result = phoneNumberPattern.test(phone)
+    return result;
   };
-  
+
   render() {
     return (
       <div>
         <section id="cart_items">
           <div className="container">
-            
+
             <div className="table-responsive cart_info">
               <table className="table table-condensed">
                 <thead>
@@ -136,10 +147,10 @@ class ContentCart extends Component {
                             <a href="">{element.name}</a>
                             <p>Màu: {element.size}</p>
                           </h4>
-                         
+
                         </td>
                         <td className="cart_price">
-                          <p>{new Intl.NumberFormat('de-DE', {currency: 'EUR' }).format(element.price)}<sup>đ</sup></p>
+                          <p>{new Intl.NumberFormat('de-DE', { currency: 'EUR' }).format(element.price)}<sup>đ</sup></p>
                         </td>
                         <td className="cart_quantity">
                           <div className="cart_quantity_button">
@@ -164,7 +175,8 @@ class ContentCart extends Component {
                             <span
                               className="cart_quantity_down"
                               onClick={() => {
-                                if (element.count === 1) {
+                                if (element.count === 1)
+                                {
                                   return;
                                 }
                                 element.count -= 1;
@@ -178,8 +190,8 @@ class ContentCart extends Component {
                         </td>
                         <td className="cart_total">
                           <p className="cart_total_price">
-                          {new Intl.NumberFormat('de-DE', {currency: 'EUR' }).format(element.price * element.count)}<sup>đ</sup>
-                            
+                            {new Intl.NumberFormat('de-DE', { currency: 'EUR' }).format(element.price * element.count)}<sup>đ</sup>
+
                           </p>
                         </td>
                         <td className="cart_delete">
@@ -206,12 +218,12 @@ class ContentCart extends Component {
               <div className="col-md-12">
                 <div class="total_area">
                   <ul>
-                   
+
                     <li>
                       Phí Vận Chuyển<span>0<sup>đ</sup> </span>
                     </li>
                     <li>
-                      Tổng Tiền <span>  {new Intl.NumberFormat('de-DE', {currency: 'EUR' }).format(this.state.total)}<sup>đ</sup></span>
+                      Tổng Tiền <span>  {new Intl.NumberFormat('de-DE', { currency: 'EUR' }).format(this.state.total)}<sup>đ</sup></span>
                     </li>
                   </ul>
                   <Modal
@@ -235,7 +247,7 @@ class ContentCart extends Component {
                       </Button>
                     </Modal.Footer>
                   </Modal>
-                  
+
                 </div>
               </div>
               <div className="col-md-12">
@@ -245,6 +257,7 @@ class ContentCart extends Component {
                       <label>Name</label>
                       <input
                         type="text"
+                        style={{ padding: 15 }}
                         value={this.state.name}
                         onChange={e => this.setState({ name: e.target.value })}
                       />
@@ -254,18 +267,20 @@ class ContentCart extends Component {
                       <label>Phone</label>
                       <input
                         type="text"
+                        style={{ padding: 15 }}
                         value={this.state.phone}
                         onChange={e => this.setState({ phone: e.target.value })}
                       />
                       <span>{this.state.notiPhone}</span>
                     </li>
                   </ul>
-                 
+
                   <ul className="user_option">
                     <li>
                       <label>Address</label>
                       <input
                         type="text"
+                        style={{ padding: 15 }}
                         value={this.state.address}
                         onChange={e =>
                           this.setState({ address: e.target.value })
@@ -287,13 +302,15 @@ class ContentCart extends Component {
                     </Modal.Header>
                     <Modal.Body>Đặt Hàng Thành Công, Vui Lòng Vào Đơn Hàng Để Xem Chi Tiết</Modal.Body>
                     <Modal.Footer>
-                      <Button onClick={() => {this.reset()
-                         window.location.reload()}}>
+                      <Button onClick={() => {
+                        this.reset()
+                        window.location.reload()
+                      }}>
                         <a>OK</a>
                       </Button>
                     </Modal.Footer>
                   </Modal>
-                  
+
                   <Modal
                     show={this.state.showpaymentfail}
                     onHide={() => this.setState({ showpaymentfail: false })}
@@ -305,7 +322,7 @@ class ContentCart extends Component {
                         Notification
                       </Modal.Title>
                     </Modal.Header>
-                    <Modal.Body>Đặt Hang Thất Bại</Modal.Body>
+                    <Modal.Body>Đặt Hàng Thất Bại</Modal.Body>
                     <Modal.Footer>
                       <Button onClick={() => this.setState({ showpaymentfail: false })}>
                         <a>Cancel</a>
@@ -313,19 +330,19 @@ class ContentCart extends Component {
                     </Modal.Footer>
                   </Modal>
                   <div className='cart-option'>
-                  
-                 
-                  <button
-                    className="btn btn-default update"
-                    onClick={() => this.handlePayment()}
-                  >
-                    Payment
-                  </button>
-                  <Link class="btn btn-default check_out" to={"/"}>
-                    Continue shopping
-                  </Link>
+
+
+                    <button
+                      className="btn btn-default update"
+                      onClick={() => this.handlePayment()}
+                    >
+                      Payment
+                    </button>
+                    <Link class="btn btn-default check_out" to={"/"}>
+                      Continue shopping
+                    </Link>
                   </div>
-                 
+
                 </div>
               </div>
             </div>
