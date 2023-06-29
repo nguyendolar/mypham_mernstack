@@ -115,7 +115,12 @@ class Profile extends Component {
         type="tell"
         placeholder="Phone number"
         value={this.props.phone_number}
-        onChange={e => this.props.setPhoneNumber(e.target.value)}
+        onChange={e => {
+          const phoneNumber = e.target.value;
+          if (/^\d{1,12}$/.test(phoneNumber)) {
+            this.props.setPhoneNumber(phoneNumber);
+          }
+        }}
       />
       <button
         onClick={() => this.props.updateInfor()}
